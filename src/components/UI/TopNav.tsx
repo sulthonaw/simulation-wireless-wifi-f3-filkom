@@ -16,7 +16,7 @@ export const TopNav = ({ config, onChangeConfig, onResetCamera }: TopNavProps) =
           <img src={wifiLogo} alt="Wi-Fi Logo" className="brand-logo-img" />
         </div>
         <div className="brand-text">
-          <h1>SIMULASI WIRELESS F3 <span className="badge-3d">CLEAN 3D</span></h1>
+          <h1>SIMULASI WIRELESS F3</h1>
           <p>Lantai 3 Sayap Barat (+11.00) & Sayap Timur (+12.00) • 10 Ruckus APs (Filkom)</p>
         </div>
       </div>
@@ -30,7 +30,7 @@ export const TopNav = ({ config, onChangeConfig, onResetCamera }: TopNavProps) =
             title="Tampilan 3D Bergaya The Sims (Tembok Cutaway)"
           >
             <Box size={16} />
-            <span>3D The Sims</span>
+            <span>3D</span>
           </button>
           <button
             className={`btn-segment ${config.viewMode === '2d-blueprint' ? 'active' : ''}`}
@@ -38,7 +38,7 @@ export const TopNav = ({ config, onChangeConfig, onResetCamera }: TopNavProps) =
             title="Tampilan 2D Blueprint Denah Asli"
           >
             <Layers size={16} />
-            <span>2D Blueprint</span>
+            <span>2D</span>
           </button>
         </div>
 

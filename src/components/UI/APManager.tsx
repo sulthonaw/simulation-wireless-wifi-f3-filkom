@@ -1,5 +1,5 @@
 import type { AccessPoint } from '../../types/floorplan';
-import { Power, Radio, CheckCircle2, XCircle, Users, Network } from 'lucide-react';
+import { Radio, CheckCircle2, XCircle, Users, ChevronRight, Network } from 'lucide-react';
 
 interface APManagerProps {
   accessPoints: AccessPoint[];
@@ -7,6 +7,8 @@ interface APManagerProps {
   onSelectAP: (apId: string | null) => void;
   onUpdateAP: (apId: string, updates: Partial<AccessPoint>) => void;
   onToggleAll: (enable: boolean) => void;
+  isOpen: boolean;
+  onToggleCollapse: () => void;
 }
 
 export const APManager = ({
@@ -14,20 +16,22 @@ export const APManager = ({
   selectedAPId,
   onSelectAP,
   onUpdateAP,
-  onToggleAll
+  onToggleAll,
+  isOpen,
+  onToggleCollapse
 }: APManagerProps) => {
   const activeCount = accessPoints.filter(ap => ap.enabled).length;
   const totalClients = accessPoints.reduce((acc, ap) => acc + (ap.enabled ? ap.clientCount : 0), 0);
 
   return (
-    <aside className="glass-panel ap-manager">
+    <aside className={`glass-panel ap-manager ${isOpen ? 'open' : 'collapsed'}`}>
       <div className="panel-header">
         <div className="header-title">
           <Radio size={18} color="#0284c7" />
           <div>
             <h3>Ruckus AP Gedung F3</h3>
             <span style={{ fontSize: '0.7rem', color: '#64748b' }}>
-              {activeCount}/{accessPoints.length} Aktif • {totalClients} Total Klien
+              {activeCount}/{accessPoints.length} Aktif • {totalClients} Klien
             </span>
           </div>
         </div>
@@ -37,14 +41,21 @@ export const APManager = ({
             onClick={() => onToggleAll(true)}
             title="Nyalakan Semua AP"
           >
-            <CheckCircle2 size={13} /> All ON
+            <CheckCircle2 size={13} /> ON
           </button>
           <button
             className="btn-text-action"
             onClick={() => onToggleAll(false)}
             title="Matikan Semua AP"
           >
-            <XCircle size={13} /> All OFF
+            <XCircle size={13} /> OFF
+          </button>
+          <button
+            className="btn-collapse-panel"
+            onClick={onToggleCollapse}
+            title="Sembunyikan Panel AP"
+          >
+            <ChevronRight size={16} />
           </button>
         </div>
       </div>
@@ -80,16 +91,18 @@ export const APManager = ({
                   </div>
                 </div>
 
-                <button
-                  className={`btn-power ${ap.enabled ? 'on' : 'off'}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onUpdateAP(ap.id, { enabled: !ap.enabled });
-                  }}
-                  title={ap.enabled ? 'Matikan AP' : 'Nyalakan AP'}
+                <label 
+                  className="switch-toggle" 
+                  onClick={(e) => e.stopPropagation()}
+                  title={ap.enabled ? `Matikan ${ap.name}` : `Nyalakan ${ap.name}`}
                 >
-                  <Power size={14} />
-                </button>
+                  <input
+                    type="checkbox"
+                    checked={ap.enabled}
+                    onChange={(e) => onUpdateAP(ap.id, { enabled: e.target.checked })}
+                  />
+                  <span className="switch-slider" />
+                </label>
               </div>
 
               {/* Collapsible or detailed controls for selected AP */}

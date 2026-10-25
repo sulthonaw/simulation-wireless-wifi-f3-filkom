@@ -42,6 +42,9 @@ export function App() {
     colorMap: 'standard'
   });
 
+  const [showLeftPanel, setShowLeftPanel] = useState(true);
+  const [showRightPanel, setShowRightPanel] = useState(true);
+
   const [inspectedSignal, setInspectedSignal] = useState<
     (SignalSample & { worldX: number; worldZ: number }) | null
   >(null);
@@ -96,7 +99,21 @@ export function App() {
       <LayerControls
         config={config}
         onChangeConfig={handleUpdateConfig}
+        isOpen={showLeftPanel}
+        onToggleCollapse={() => setShowLeftPanel((prev) => !prev)}
       />
+
+      {/* Left Floating Trigger Tab when panel is collapsed */}
+      {!showLeftPanel && (
+        <button
+          className="floating-panel-trigger left"
+          onClick={() => setShowLeftPanel(true)}
+          title="Tampilkan Lapisan Simulasi"
+        >
+          <span className="trigger-icon">≡</span>
+          <span>Lapisan</span>
+        </button>
+      )}
 
       {/* Right AP List & Manager */}
       <APManager
@@ -105,7 +122,21 @@ export function App() {
         onSelectAP={handleSelectAP}
         onUpdateAP={handleUpdateAP}
         onToggleAll={handleToggleAllAPs}
+        isOpen={showRightPanel}
+        onToggleCollapse={() => setShowRightPanel((prev) => !prev)}
       />
+
+      {/* Right Floating Trigger Tab when panel is collapsed */}
+      {!showRightPanel && (
+        <button
+          className="floating-panel-trigger right"
+          onClick={() => setShowRightPanel(true)}
+          title="Tampilkan Daftar AP"
+        >
+          <span className="trigger-icon">📡</span>
+          <span>AP ({accessPoints.filter((a) => a.enabled).length})</span>
+        </button>
+      )}
 
       {/* Bottom Signal Color Scale Legend */}
       <SignalLegend />

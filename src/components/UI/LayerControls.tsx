@@ -1,17 +1,28 @@
 import type { SimulationConfig } from '../../types/floorplan';
-import { Eye, EyeOff, Radio, Shield, Waves, MapPin, Activity, DoorOpen } from 'lucide-react';
+import { Radio, Shield, Waves, MapPin, Activity, DoorOpen, ChevronLeft } from 'lucide-react';
 
 interface LayerControlsProps {
   config: SimulationConfig;
   onChangeConfig: (updates: Partial<SimulationConfig>) => void;
+  isOpen: boolean;
+  onToggleCollapse: () => void;
 }
 
-export const LayerControls = ({ config, onChangeConfig }: LayerControlsProps) => {
+export const LayerControls = ({ config, onChangeConfig, isOpen, onToggleCollapse }: LayerControlsProps) => {
   return (
-    <aside className="glass-panel layer-controls">
+    <aside className={`glass-panel layer-controls ${isOpen ? 'open' : 'collapsed'}`}>
       <div className="panel-header">
-        <Activity size={18} color="#0284c7" />
-        <h3>Lapisan Simulasi (Layers)</h3>
+        <div className="panel-header-title">
+          <Activity size={18} color="#0284c7" />
+          <h3>Lapisan Simulasi</h3>
+        </div>
+        <button
+          className="btn-collapse-panel"
+          onClick={onToggleCollapse}
+          title="Sembunyikan Panel Lapisan"
+        >
+          <ChevronLeft size={16} />
+        </button>
       </div>
 
       <div className="layers-list">
@@ -21,12 +32,14 @@ export const LayerControls = ({ config, onChangeConfig }: LayerControlsProps) =>
             <Radio size={16} color="#0284c7" />
             <span>Heatmap Sinyal Wi-Fi</span>
           </div>
-          <button
-            className={`btn-toggle ${config.showHeatmap ? 'on' : 'off'}`}
-            onClick={() => onChangeConfig({ showHeatmap: !config.showHeatmap })}
-          >
-            {config.showHeatmap ? <Eye size={16} /> : <EyeOff size={16} />}
-          </button>
+          <label className="switch-toggle" title="Nyalakan/Matikan Heatmap Sinyal">
+            <input
+              type="checkbox"
+              checked={config.showHeatmap}
+              onChange={(e) => onChangeConfig({ showHeatmap: e.target.checked })}
+            />
+            <span className="switch-slider" />
+          </label>
         </div>
 
         {/* Heatmap Opacity Slider */}
@@ -51,12 +64,14 @@ export const LayerControls = ({ config, onChangeConfig }: LayerControlsProps) =>
             <Waves size={16} color="#10b981" />
             <span>Pancaran Gelombang AP</span>
           </div>
-          <button
-            className={`btn-toggle ${config.showWaves ? 'on' : 'off'}`}
-            onClick={() => onChangeConfig({ showWaves: !config.showWaves })}
-          >
-            {config.showWaves ? <Eye size={16} /> : <EyeOff size={16} />}
-          </button>
+          <label className="switch-toggle" title="Nyalakan/Matikan Animasi Gelombang">
+            <input
+              type="checkbox"
+              checked={config.showWaves}
+              onChange={(e) => onChangeConfig({ showWaves: e.target.checked })}
+            />
+            <span className="switch-slider" />
+          </label>
         </div>
 
         {/* Concrete Pillars Toggle */}
@@ -65,12 +80,14 @@ export const LayerControls = ({ config, onChangeConfig }: LayerControlsProps) =>
             <Shield size={16} color="#64748b" />
             <span>Tiang Beton (Columns)</span>
           </div>
-          <button
-            className={`btn-toggle ${config.showPillars ? 'on' : 'off'}`}
-            onClick={() => onChangeConfig({ showPillars: !config.showPillars })}
-          >
-            {config.showPillars ? <Eye size={16} /> : <EyeOff size={16} />}
-          </button>
+          <label className="switch-toggle" title="Tampilkan/Sembunyikan Tiang Beton">
+            <input
+              type="checkbox"
+              checked={config.showPillars}
+              onChange={(e) => onChangeConfig({ showPillars: e.target.checked })}
+            />
+            <span className="switch-slider" />
+          </label>
         </div>
 
         {/* Walls Toggle */}
@@ -79,12 +96,14 @@ export const LayerControls = ({ config, onChangeConfig }: LayerControlsProps) =>
             <span className="wall-icon-box"></span>
             <span>Dinding / Tembok</span>
           </div>
-          <button
-            className={`btn-toggle ${config.showWalls ? 'on' : 'off'}`}
-            onClick={() => onChangeConfig({ showWalls: !config.showWalls })}
-          >
-            {config.showWalls ? <Eye size={16} /> : <EyeOff size={16} />}
-          </button>
+          <label className="switch-toggle" title="Tampilkan/Sembunyikan Dinding">
+            <input
+              type="checkbox"
+              checked={config.showWalls}
+              onChange={(e) => onChangeConfig({ showWalls: e.target.checked })}
+            />
+            <span className="switch-slider" />
+          </label>
         </div>
 
         {/* Doors & Openings Toggle */}
@@ -93,12 +112,14 @@ export const LayerControls = ({ config, onChangeConfig }: LayerControlsProps) =>
             <DoorOpen size={16} color="#0284c7" />
             <span>Pintu & Bukaan 3D</span>
           </div>
-          <button
-            className={`btn-toggle ${config.showDoors ? 'on' : 'off'}`}
-            onClick={() => onChangeConfig({ showDoors: !config.showDoors })}
-          >
-            {config.showDoors ? <Eye size={16} /> : <EyeOff size={16} />}
-          </button>
+          <label className="switch-toggle" title="Tampilkan/Sembunyikan Pintu">
+            <input
+              type="checkbox"
+              checked={config.showDoors}
+              onChange={(e) => onChangeConfig({ showDoors: e.target.checked })}
+            />
+            <span className="switch-slider" />
+          </label>
         </div>
 
         {/* Room Labels Toggle */}
@@ -107,12 +128,14 @@ export const LayerControls = ({ config, onChangeConfig }: LayerControlsProps) =>
             <MapPin size={16} color="#f59e0b" />
             <span>Nama & Level Ruangan</span>
           </div>
-          <button
-            className={`btn-toggle ${config.showLabels ? 'on' : 'off'}`}
-            onClick={() => onChangeConfig({ showLabels: !config.showLabels })}
-          >
-            {config.showLabels ? <Eye size={16} /> : <EyeOff size={16} />}
-          </button>
+          <label className="switch-toggle" title="Tampilkan/Sembunyikan Label Ruangan">
+            <input
+              type="checkbox"
+              checked={config.showLabels}
+              onChange={(e) => onChangeConfig({ showLabels: e.target.checked })}
+            />
+            <span className="switch-slider" />
+          </label>
         </div>
       </div>
 
@@ -124,13 +147,13 @@ export const LayerControls = ({ config, onChangeConfig }: LayerControlsProps) =>
             className={`btn-freq ${config.freqMhz === 5200 ? 'active' : ''}`}
             onClick={() => onChangeConfig({ freqMhz: 5200 })}
           >
-            5.0 GHz (Modern / Fast)
+            5.0 GHz (Cepat)
           </button>
           <button
             className={`btn-freq ${config.freqMhz === 2400 ? 'active' : ''}`}
             onClick={() => onChangeConfig({ freqMhz: 2400 })}
           >
-            2.4 GHz (Jangkauan Luas)
+            2.4 GHz (Luas)
           </button>
         </div>
       </div>
