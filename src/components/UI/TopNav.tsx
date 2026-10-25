@@ -1,5 +1,6 @@
+import wifiLogo from '../../assets/wifi-logo.png';
 import type { SimulationConfig } from '../../types/floorplan';
-import { Box, Compass, Layers, Sliders, Wifi } from 'lucide-react';
+import { Box, Compass, Layers, Sliders } from 'lucide-react';
 
 interface TopNavProps {
   config: SimulationConfig;
@@ -12,7 +13,7 @@ export const TopNav = ({ config, onChangeConfig, onResetCamera }: TopNavProps) =
     <header className="glass-panel top-nav">
       <div className="nav-brand">
         <div className="brand-icon">
-          <Wifi className="icon-pulse" size={22} color="#0284c7" />
+          <img src={wifiLogo} alt="Wi-Fi Logo" className="brand-logo-img" />
         </div>
         <div className="brand-text">
           <h1>SIMULASI WIRELESS F3 <span className="badge-3d">CLEAN 3D</span></h1>

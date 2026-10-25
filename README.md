@@ -1,32 +1,36 @@
-# React + TypeScript + Vite
+# Simulasi Wireless F3
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+An interactive 3D web application to simulate and visualize Wi-Fi signal coverage on the 3rd floor of Building F.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- [Node.js](https://nodejs.org/) (version 18 or newer recommended)
+- npm (bundled with Node.js)
 
-## React Compiler
+## Installation & Setup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd simulasi-wireless-f3
+   ```
 
-## Expanding the Oxlint configuration
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+3. **Run development server**:
+   ```bash
+   npm run dev
+   ```
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
+4. **Open the application**:
+   Open your browser and navigate to the address shown in the terminal (typically `http://localhost:5173`).
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Available Scripts
+
+- `npm run dev`: Starts the local development server.
+- `npm run build`: Builds the production bundle with TypeScript checks.
+- `npm run preview`: Previews the production build locally.
+- `npm run lint`: Checks for code quality issues using Oxlint.
